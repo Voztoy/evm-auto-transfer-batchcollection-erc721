@@ -5,8 +5,7 @@ Welcome to the `evm-auto-transfer` repository! This script allows you to automat
 ## Features
 
 - 📡 Dynamic RPC URL, chain ID, and explorer integration from JSON files.
-- 🔄 Automated transaction processing for multiple addresses.
-- 🎯 Targeted transfers to specified addresses from `addresses.json`.
+- 🔄 Automated transaction processing from multiple addresses.
 - 🚀 Easily configurable for various networks (testnets and mainnets).
 - 🔒 Secure handling of private keys.
 
@@ -38,7 +37,7 @@ Ensure you have the following installed:
 
 ### Configuration
 
-1. **Define the Chains**:
+3. **Define the Chains**:
 
    - You'll need to specify the network details in JSON files located in the `/chains` directory. Create two JSON files: `testnet.json` and `mainnet.json`.
    - Each file should contain an array of objects with the following structure:
@@ -69,7 +68,7 @@ Ensure you have the following installed:
      ]
      ```
 
-2. **Define Private Keys**:
+4. **Define Private Keys**:
 
    - Store your private keys securely inside a `privateKeys.json` file in the root directory. This file should contain an array of private keys as strings:
 
@@ -82,51 +81,78 @@ Ensure you have the following installed:
 
      **⚠️ Important**: Keep this file secure and avoid exposing your private keys!
 
-3. **Find All ID of Collection**:
+5. **Find All ID of Collection**:
 
-   - Trong file createIDFile.js 
+   - Trong file createIDFile.js
 
    // Địa chỉ hợp đồng ERC-721
-  const CONTRACT_ADDRESS = "NFT_Contract";
 
-  // Tạo provider cho mạng bạn muốn sử dụng
-  const RPC_URL = "YOUR_RPC_URL"; // Thay đổi với URL RPC của bạn
+   ```bash
+   const CONTRACT_ADDRESS = "NFT_Contract"; Thay NFT_Contract bằng contract collection
+   ```
+   // Tạo provider cho mạng bạn muốn sử dụng
+  
+   ```bash
+   const RPC_URL = "YOUR_RPC_URL"; // Thay đổi với URL RPC của bạn
+   ```
 
-  // Định nghĩa dãy ID mà bạn muốn lấy (lấy từ 1 đến hết hoặc khoảng ID tùy chỉnh)
-  const startId = 17080; // ID bắt đầu
-  const endId = 17105; // ID kết thúc
+   // Định nghĩa dãy ID mà bạn muốn lấy (lấy từ 1 đến hết hoặc khoảng ID tùy chỉnh)
 
-    - Chạy lệnh node createIDFile.js để tạo file ID.json chưa ID và ví trong khoảng tương ứng
+   ```bash
+   const startId = 17080; // ID bắt đầu
+   const endId = 17105; // ID kết thúc
+   ```
+  
+   - Run the following command to create a file ID.json containing the IDs within the specified range:
+   
+   ```bash
+   node createIDFile.js
+   ```
 
-4. **Find ID of your wallet**:
-     
-     - Trong file checkWallets.js
+6. **Find ID of your wallet**:
+
+   - Trong file checkWallets.js
+
     // Kết nối đến mạng
+   
+   ```bash
     const provider = new ethers.JsonRpcProvider('YOUR_RPC_URL'); // Thay YOUR_RPC_URL bằng URL RPC của bạn.
+   ```
 
-     - Chạy lệnh node checkWallets.js để tạo file walletsData.json chứa ID và privatekeys của bạn
+   - Run the following command to create a file walletsData.json containing your wallet's IDs and private keys:
+   
+   ```bash
+   node checkWallets.js
+   ```
 
-5. **Batch Collection all wallet**:
-     - Trong file index.js
+7. **Batch Collection all wallet**:
 
-// Đặt URL của RPC
-const provider = new ethers.JsonRpcProvider('YOUR_RPC_URL'); // Thay bằng RPC URL của bạn
+   - Trong file index.js
 
-// Địa chỉ hợp đồng NFT ERC-721 và ABI
-const nftContractAddress = 'NFT_Contract'; // Thay NFT_Contract bằng contract collection
-const nftAbi = [
-  "function safeTransferFrom(address from, address to, uint256 tokenId) external"
-];
+   // Đặt URL của RPC
 
-// Địa chỉ ví nhận
-const recipientAddress = 'YOUR_RECEIVE_ADDRESS'; // Thay YOUR_RECEIVE_ADDRESS bắng ví nhận của bạn
+   ```bash
+   const provider = new ethers.JsonRpcProvider('YOUR_RPC_URL'); // Thay bằng RPC URL của bạn
+   ```
 
- 
-  chạy lệnh sau để gửi hết NFT về 1 ví:
+   // Địa chỉ hợp đồng NFT ERC-721 và ABI
 
+   ```bash
+   const nftContractAddress = 'NFT_Contract'; // Thay NFT_Contract bằng contract collection
+   ```
+
+   // Địa chỉ ví nhận
+
+   ```bash
+   const recipientAddress = 'YOUR_RECEIVE_ADDRESS'; // Thay YOUR_RECEIVE_ADDRESS bắng ví nhận của bạn
+   ```
+
+   - Run the following command to send all NFTs to a single wallet::
+   
    ```bash
    npm start
    ```
+
 
 ### Contribution
 

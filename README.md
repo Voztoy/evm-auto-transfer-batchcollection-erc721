@@ -32,6 +32,8 @@ Ensure you have the following installed:
 
    ```bash
    npm install
+   npm init -y
+   npm install ethers colors
    ```
 
 ### Configuration
@@ -80,33 +82,51 @@ Ensure you have the following installed:
 
      **⚠️ Important**: Keep this file secure and avoid exposing your private keys!
 
-3. **Create Target Addresses File**:
+3. **Find All ID of Collection**:
 
-   - Create an `addresses.json` file in the root directory. This file should contain an array of target addresses you want to transfer funds to:
+   - Trong file createIDFile.js 
 
-     ```json
-     [
-         "0xTARGET_ADDRESS_1",
-         "0xTARGET_ADDRESS_2"
-     ]
-     ```
+   // Địa chỉ hợp đồng ERC-721
+  const CONTRACT_ADDRESS = "NFT_Contract";
 
-### Usage
+  // Tạo provider cho mạng bạn muốn sử dụng
+  const RPC_URL = "YOUR_RPC_URL"; // Thay đổi với URL RPC của bạn
 
-1. Run the script for random address generation and transactions:
+  // Định nghĩa dãy ID mà bạn muốn lấy (lấy từ 1 đến hết hoặc khoảng ID tùy chỉnh)
+  const startId = 17080; // ID bắt đầu
+  const endId = 17105; // ID kết thúc
+
+    - Chạy lệnh node createIDFile.js để tạo file ID.json chưa ID và ví trong khoảng tương ứng
+
+4. **Find ID of your wallet**:
+     
+     - Trong file checkWallets.js
+    // Kết nối đến mạng
+    const provider = new ethers.JsonRpcProvider('YOUR_RPC_URL'); // Thay YOUR_RPC_URL bằng URL RPC của bạn.
+
+     - Chạy lệnh node checkWallets.js để tạo file walletsData.json chứa ID và privatekeys của bạn
+
+5. **Batch Collection all wallet**:
+     - Trong file index.js
+
+// Đặt URL của RPC
+const provider = new ethers.JsonRpcProvider('YOUR_RPC_URL'); // Thay bằng RPC URL của bạn
+
+// Địa chỉ hợp đồng NFT ERC-721 và ABI
+const nftContractAddress = 'NFT_Contract'; // Thay NFT_Contract bằng contract collection
+const nftAbi = [
+  "function safeTransferFrom(address from, address to, uint256 tokenId) external"
+];
+
+// Địa chỉ ví nhận
+const recipientAddress = 'YOUR_RECEIVE_ADDRESS'; // Thay YOUR_RECEIVE_ADDRESS bắng ví nhận của bạn
+
+ 
+  chạy lệnh sau để gửi hết NFT về 1 ví:
 
    ```bash
    npm start
    ```
-
-2. To use the targeted address feature, run:
-
-   ```bash
-   npm run target
-   ```
-
-   - You will be prompted to select your network environment (Testnet/Mainnet) and choose the chain from the provided list using the arrow keys.
-   - Define the number of transactions you want to process and let the script handle the rest!
 
 ### Contribution
 
@@ -116,10 +136,10 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 If you would like to support the development of this project, you can make a donation using the following addresses:
 
-- **Solana**: `GLQMG8j23ookY8Af1uLUg4CQzuQYhXcx56rkpZkyiJvP`
-- **EVM**: `0x960EDa0D16f4D70df60629117ad6e5F1E13B8F44`
-- **BTC**: `bc1p9za9ctgwwvc7amdng8gvrjpwhnhnwaxzj3nfv07szqwrsrudfh6qvvxrj8`
+- **EVM**: `0x3e67E9c147Fa18dF710199D329F46bDaab128087`
+
 
 ### License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
+"# evm-auto-transfer-batchcollection-erc721" 
